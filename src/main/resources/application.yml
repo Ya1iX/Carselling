@@ -1,12 +1,12 @@
 spring:
   liquibase:
-    enabled: true
+    enabled: false
     change-log: classpath:db/changelog/db.changelog-master.xml
   jpa:
     database: POSTGRESQL
     show-sql: true
     hibernate:
-      ddl-auto: validate
+      ddl-auto: create-drop
   datasource:
     platform: postgres
     url: jdbc:postgresql://localhost:5432/carselling

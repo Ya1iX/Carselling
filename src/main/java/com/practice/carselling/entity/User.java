@@ -11,7 +11,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.Collection;
 import java.util.Collections;
@@ -32,8 +32,6 @@ import java.util.Collections;
 )
 public class User implements UserDetails {
 
-    private static final String NOT_EMPTY_MSG = " cannot be empty or null";
-
     @Id
     @SequenceGenerator(
             name = "users_sequence",
@@ -45,23 +43,28 @@ public class User implements UserDetails {
             generator = "users_sequence"
     )
     private Long id;
+
     @Column(nullable = false)
-    @NotEmpty(message = "Username" + NOT_EMPTY_MSG)
+    @NotBlank(message = "Username cannot be empty or null")
     private String username;
+
     @Column(nullable = false)
-    @NotEmpty(message = "Password" + NOT_EMPTY_MSG)
+    @NotBlank(message = "Password cannot be empty or null")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     @NotNull(message = "Invalid UserRole value")
     private UserRole userRole;
+
+    @Column(nullable = false)
+    @NotNull(message = "Enabled flag cannot be null")
+    private Boolean enabled;
+
     private String email;
     private String firstName;
     private String lastName;
-    @Column(nullable = false)
-    @NotNull(message = "Enabled flag" + NOT_EMPTY_MSG)
-    private Boolean enabled;
 
     public User(String username, String password, UserRole userRole, String email, String firstName, String lastName, Boolean enabled) {
         this.username = username;

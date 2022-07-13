@@ -4,18 +4,18 @@ import com.practice.carselling.entity.User;
 import com.practice.carselling.repository.UserRepository;
 import com.practice.carselling.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 @RequiredArgsConstructor
-@Transactional
 public class UserServiceImpl implements UserDetailsService, UserService {
 
     private final UserRepository repository;
@@ -27,17 +27,32 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     }
 
     @Override
+    public User readById(Long id) {
+        return repository.findById(id).orElseThrow(() -> new NoSuchElementException("User not found by id: " + id));
+    }
+
+    @Override
+    public List<User> list(int page, int size) {
+        return repository.findAll(PageRequest.of(page, size)).toList();
+    }
+
+    @Override
     public List<User> readAll() {
         return repository.findAll();
     }
 
     @Override
-    public void registerUser(User user) {
-        if(repository.findByUsername(user.getUsername()).isPresent()) {
+    public void deleteById(Long id) {
+        repository.deleteById(id);
+    }
+
+    @Override
+    public void save(User entity) {
+        if(repository.findByUsername(entity.getUsername()).isPresent()) {
             throw new IllegalStateException("Username already taken");
         }
 
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        repository.save(user);
+        entity.setPassword(passwordEncoder.encode(entity.getPassword()));
+        repository.save(entity);
     }
 }

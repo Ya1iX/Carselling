@@ -1,0 +1,15 @@
+spring:
+  liquibase:
+    enabled: true
+    change-log: classpath:db/changelog/db.changelog-master.xml
+  jpa:
+    database: POSTGRESQL
+    show-sql: true
+    hibernate:
+      ddl-auto: validate
+  datasource:
+    platform: postgres
+    url: jdbc:postgresql://localhost:5432/carselling
+    username: postgres
+    password: postgres
+    driverClassName: org.postgresql.Driver

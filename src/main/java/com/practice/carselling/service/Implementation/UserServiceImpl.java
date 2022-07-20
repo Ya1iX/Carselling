@@ -47,12 +47,12 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     }
 
     @Override
-    public void save(User entity) {
+    public User save(User entity) {
         if(repository.findByUsername(entity.getUsername()).isPresent()) {
             throw new IllegalStateException("Username already taken");
         }
 
         entity.setPassword(passwordEncoder.encode(entity.getPassword()));
-        repository.save(entity);
+        return repository.save(entity);
     }
 }

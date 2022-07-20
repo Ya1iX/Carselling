@@ -76,7 +76,6 @@ public class User implements UserDetails {
         this.enabled = enabled;
     }
 
-    @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         SimpleGrantedAuthority authority = new SimpleGrantedAuthority(userRole.name());
         return Collections.singletonList(authority);

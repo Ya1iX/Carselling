@@ -1,5 +1,6 @@
 package com.practice.carselling.entity;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -41,7 +42,7 @@ public class Ad {
     private Car car;
 
     @Column(nullable = false)
-    @NotNull(message = "TimeStamp cannot be null")
+//    @NotNull(message = "TimeStamp cannot be null")
     private LocalDateTime timeStamp;
 
     @Column(nullable = false)
@@ -66,6 +67,18 @@ public class Ad {
         this.author = author;
         this.car = car;
         this.timeStamp = timeStamp;
+        this.price = price;
+        this.city = city;
+        this.phoneNumber = phoneNumber;
+        this.isDeleted = isDeleted;
+        this.description = description;
+    }
+
+    @JsonCreator //Constructor for object initialization with auto-timestamp
+    public Ad(User author, Car car, Double price, String city, String phoneNumber, Boolean isDeleted, String description) {
+        this.author = author;
+        this.car = car;
+        this.timeStamp = LocalDateTime.now();
         this.price = price;
         this.city = city;
         this.phoneNumber = phoneNumber;

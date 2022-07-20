@@ -7,5 +7,5 @@ public interface Service<T> {
     List<T> list(int page, int size);
     List<T> readAll();
     void deleteById(Long id);
-    void save(T entity);
+    T save(T entity);
 }

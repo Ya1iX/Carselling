@@ -37,7 +37,7 @@ public class AdServiceImpl implements AdService {
     }
 
     @Override
-    public void save(Ad entity) {
-        repository.save(entity);
+    public Ad save(Ad entity) {
+        return repository.save(entity);
     }
 }

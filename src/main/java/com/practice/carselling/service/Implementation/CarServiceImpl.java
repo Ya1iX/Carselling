@@ -37,7 +37,7 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
-    public void save(Car entity) {
-        repository.save(entity);
+    public Car save(Car entity) {
+        return repository.save(entity);
     }
 }
